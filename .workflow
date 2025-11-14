@@ -1,0 +1,10 @@
+name: ARC Demo
+on:
+  workflow_dispatch:
+
+jobs:
+  Use-ARC:
+    runs-on: arc-runner
+    steps:
+      - run: echo "🎉 Running on ARC self-hosted runner!"
+      - run: echo "Repo: ${{ github.repository }}, Ref: ${{ github.ref }}"
