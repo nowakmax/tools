@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   Use-ARC:
-    runs-on: arc-runner
+    runs-on: arc-runners
     steps:
       - run: echo "🎉 Running on ARC self-hosted runner!"
       - run: echo "Repo:${{ github.repository }}, Ref:${{ github.ref }}"
