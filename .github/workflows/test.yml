@@ -6,4 +6,5 @@ jobs:
     runs-on: arc-runners
     steps:
       - run: echo "🎉 Running on ARC self-hosted runner!"
+      - run: sleep 10
       - run: echo "Repo:${{ github.repository }}, Ref:${{ github.ref }}"
