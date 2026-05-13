@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   Use-ARC:
-    runs-on: arc-runners
+    runs-on: pact.arc.runners-nowakmax-tools
     steps:
       - run: echo "🎉 Running on ARC self-hosted runner!"
       - run: sleep 10
