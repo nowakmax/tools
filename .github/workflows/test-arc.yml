@@ -19,7 +19,7 @@ jobs:
       - run: cat /etc/os-release
       - run: uname -a
       - run: echo "Repo:${{ github.repository }}, Ref:${{ github.ref }}"
-      - run: sleep 60
+      - run: sleep 300
 
   test-networking:
     runs-on: pact.arc.runners-nowakmax-tools
