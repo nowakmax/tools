@@ -3,32 +3,36 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-ubuntu:
+  test-basic:
     runs-on: pact.arc.runners-nowakmax-tools
-    container:
-      image: ubuntu:24.04
     steps:
-      - run: echo "🎉 Running on ARC with Ubuntu 24.04"
+      - run: echo "🎉 Running on ARC self-hosted runner"
+      - run: |
+          echo "RUNNER_VERSION=${RUNNER_VERSION:-not set}"
+          if [ -x /runner/bin/Runner.Listener ]; then
+            /runner/bin/Runner.Listener --version
+          elif command -v Runner.Listener >/dev/null 2>&1; then
+            Runner.Listener --version
+          else
+            echo "Runner.Listener binary not found"
+          fi
       - run: cat /etc/os-release
       - run: uname -a
       - run: echo "Repo:${{ github.repository }}, Ref:${{ github.ref }}"
 
-  test-alpine:
+  test-networking:
     runs-on: pact.arc.runners-nowakmax-tools
-    container:
-      image: alpine:3.20
     steps:
-      - run: echo "🏔️ Running on ARC with Alpine 3.20"
-      - run: cat /etc/os-release
-      - run: apk add --no-cache curl && curl --version
+      - run: echo "🌐 Testing network connectivity"
+      - run: curl -s -o /dev/null -w "%{http_code}" https://github.com
+      - run: nslookup github.com || cat /etc/resolv.conf
       - run: echo "Repo:${{ github.repository }}, Ref:${{ github.ref }}"
 
-  test-debian:
+  test-tooling:
     runs-on: pact.arc.runners-nowakmax-tools
-    container:
-      image: debian:bookworm-slim
     steps:
-      - run: echo "📦 Running on ARC with Debian Bookworm"
-      - run: cat /etc/os-release
-      - run: dpkg --print-architecture
+      - run: echo "🔧 Testing available tools"
+      - run: git --version || echo "git not found"
+      - run: which bash && bash --version
+      - run: df -h
       - run: echo "Repo:${{ github.repository }}, Ref:${{ github.ref }}"
