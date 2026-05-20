@@ -31,9 +31,15 @@ jobs:
 
   test-tooling:
     runs-on: pact.arc.runners-nowakmax-tools
+    container:
+      image: harbor.pact.intel.com/common/ansible-proxmox@sha256:93df269bc6d2ba50a4499bc3ff9bd4482eaf4cbad180de23d4f2531590e74c83
+    defaults:
+      run:
+        shell: bash
     steps:
       - run: echo "🔧 Testing available tools"
       - run: git --version || echo "git not found"
       - run: which bash && bash --version
       - run: df -h
+      - run: echo "Container image started successfully"
       - run: echo "Repo:${{ github.repository }}, Ref:${{ github.ref }}"
